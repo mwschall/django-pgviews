@@ -1,11 +1,9 @@
-from optparse import make_option
 import logging
 
 from django.core.management.base import BaseCommand
 from django.db import DEFAULT_DB_ALIAS
 
 from django_pgviews.models import ViewSyncer
-
 
 log = logging.getLogger("django_pgviews.sync_pgviews")
 
