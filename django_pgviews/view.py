@@ -58,7 +58,7 @@ def realize_deferred_projections(sender, *args, **kwargs):
             # attribute or explicitly-defined field with that name.
             if hasattr(view_cls, name) or hasfield(view_cls, name):
                 continue
-            copy.copy(field).contribute_to_class(view_cls, name)
+            copy.deepcopy(field).contribute_to_class(view_cls, name)
 
 
 models.signals.class_prepared.connect(realize_deferred_projections)
@@ -382,7 +382,7 @@ def _realise_projections(app_label, model_name):
     realise_deferred_projections() if it has.
     """
     try:
-        model_cls = apps.get_model(app_label, model_name)
+        model_cls = apps.get_model(app_label, model_name, require_ready=False)
     except exceptions.AppRegistryNotReady:
         return
     if model_cls is not None:
